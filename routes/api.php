@@ -3,13 +3,15 @@
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ModelInfoController;
 use App\Http\Controllers\StageController;
+use App\Http\Controllers\SubjectContentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Faculty;
-
+use App\Models\Subject_content;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,4 +45,14 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('subject', [SubjectController::class, 'store']);
     Route::put('subject/{Subject}', [SubjectController::class, 'update']);
     Route::delete('subject/{Subject}', [SubjectController::class, 'destroy']);
+
+    Route::get('subjectcontents', [SubjectContentController::class, 'index']);
+    Route::post('subjectcontent', [SubjectContentController::class, 'store']);
+    Route::put('subjectcontent/{SubjectContent}', [SubjectContentController::class, 'update']);
+    Route::delete('subjectcontent/{SubjectContent}', [SubjectContentController::class, 'destroy']);
+
+    Route::get('modelinfos', [ModelInfoController::class, 'index']);
+    Route::post('modelinfo', [ModelInfoController::class, 'store']);
+    Route::put('modelinfo/{ModelInfo}', [ModelInfoController::class, 'update']);
+    Route::delete('modelinfo/{ModelInfo}', [ModelInfoController::class, 'destroy']);
 });
