@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DeliveryPlan;
 use App\Http\Requests\StoreDeliveryPlanRequest;
 use App\Http\Requests\UpdateDeliveryPlanRequest;
+use App\Models\ModelInfo;
 use Illuminate\Http\Request;
 
 class DeliveryPlanController extends Controller
@@ -62,9 +63,26 @@ class DeliveryPlanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDeliveryPlanRequest $request, DeliveryPlan $deliveryPlan)
+    public function update(request $request,  $modelInfo_id)
     {
-        //
+        $model =ModelInfo::find($modelInfo_id);
+        if(!$model){
+            return response()->json(['message'=>'model is not found'], 404);
+        }
+
+        $request->validate([
+            'records' => 'required|array',
+            'records.*.modelinfo_id' => 'required',
+            'records.*.material_covered_id' => 'required',
+        ]);
+
+        DeliveryPlan::where("modelinfo_id", "=", $modelInfo_id)->delete();
+        $data = $request->json()->all();
+        foreach ($data['records'] as $record) {
+            DeliveryPlan::create($record);
+        }
+        return response()->json(['message' => 'Records updated successfully']);
+
     }
 
     /**

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DeliveryPlanController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\HomeController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\StageController;
 use App\Http\Controllers\SubjectContentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\UserController;
+use App\Models\DeliveryPlan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Faculty;
@@ -28,7 +30,7 @@ use App\Models\Subject_content;
 Route::post('login', [UserController::class, 'login']);
 Route::post('register', [UserController::class, 'register']);
 
-Route::group(['middleware' => 'auth:sanctum'], function () {
+// Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('logout', [UserController::class, 'logout']);
 
     Route::get('Faculties', [FacultyController::class, 'index']);
@@ -55,4 +57,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('modelinfo', [ModelInfoController::class, 'store']);
     Route::put('modelinfo/{ModelInfo}', [ModelInfoController::class, 'update']);
     Route::delete('modelinfo/{ModelInfo}', [ModelInfoController::class, 'destroy']);
-});
+
+    Route::get('deliveryplans', [DeliveryPlanController::class, 'index']);
+    Route::post('deliveryplan', [DeliveryPlanController::class, 'store']);
+    Route::put('deliveryplan/{ModelInfo}', [DeliveryPlanController::class, 'update']);
+    Route::delete('modelinfo/{ModelInfo}', [ModelInfoController::class, 'destroy']);
+// });
