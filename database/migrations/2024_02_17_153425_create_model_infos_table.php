@@ -31,7 +31,12 @@ return new class extends Migration
             $table->string('prn_email');
             $table->string('review_committee_approval');
             $table->string('version_number');
+            $table->unsignedBigInteger('subject_id');
+            $table->unsignedBigInteger('stage_id');
             $table->timestamps();
+            $table->foreign("subject_id")->references("id")->on("subjects")->onDelete('cascade');
+            $table->foreign("stage_id")->references("id")->on("stages")->onDelete('cascade');
+
         });
     }
 
